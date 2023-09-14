@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ======================================== -->
+<!-- ロボットの形状定義                         -->
+<!-- ======================================== -->
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <xacro:include filename="$(find rrbot_description)/urdf/inertial.xacro" />
+  <xacro:include filename="$(find rrbot_description)/urdf/material.xacro" />
+
+  <!-- args
+    parent: ロボットの親座標系の名前
+    origin: ロボットの親座標系の原点
+  -->
+  <xacro:macro name="rrbot" params="parent *origin">
+    <!-- ======================================== -->
+    <!-- Linkages                                 -->
+    <!-- ======================================== -->
+
+    <!-- base_link -->
+    <link name="base_link">
+      <!-- 形状定義 -->
+      <xacro:property name="base_link_shape">
+        <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <box size="0.3 0.3 0.3" />
+        </geometry>
+      </xacro:property>
+
+      <visual>
+        <xacro:insert_block name="base_link_shape" />
+        <material name="red" />
+      </visual>
+
+      <collision>
+        <xacro:insert_block name="base_link_shape" />
+      </collision>
+
+      <xacro:default_inertial />
+    </link>
+
+    <!-- link1 -->
+    <link name="link1">
+      <!-- 形状定義 -->
+      <xacro:property name="link1_shape">
+        <origin xyz="0.0 0.0 0.25" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <cylinder length="0.5" radius="${0.2 / 2.0}" />
+        </geometry>
+      </xacro:property>
+
+      <visual>
+        <xacro:insert_block name="link1_shape" />
+        <material name="green" />
+      </visual>
+
+      <collision>
+        <xacro:insert_block name="link1_shape" />
+      </collision>
+
+      <xacro:default_inertial />
+    </link>
+
+    <!-- link 2 -->
+    <link name="link2">
+      <!-- 形状定義 -->
+      <xacro:property name="link2_shape">
+        <origin xyz="0.0 0.0 0.3" rpy="0.0 0.0 0.0" />
+        <geometry>
+          <box size="0.1 0.1 0.6" />
+        </geometry>
+      </xacro:property>
+
+      <visual>
+        <xacro:insert_block name="link2_shape" />
+        <material name="blue" />
+      </visual>
+
+      <collision>
+        <xacro:insert_block name="link2_shape" />
+      </collision>
+
+      <xacro:default_inertial />
+    </link>
+
+    <!-- tool0 -->
+    <link name="tool0" />
+
+    <!-- ======================================== -->
+    <!-- Joints                                   -->
+    <!-- ======================================== -->
+
+    <!-- base_joint (parent -> base_link) -->
+    <joint name="base_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="base_link" />
+      <xacro:insert_block name="origin" />
+    </joint>
+
+    <!-- joint1 (base_link -> link1) -->
+    <joint name="joint1" type="revolute">
+      <parent link="base_link" />
+      <child link="link1" />
+      <origin xyz="0.0 0.0 0.3" rpy="0.0 0.0 0.0" />
+      <axis xyz="0.0 0.0 1.0" />
+      <limit
+        effort="1.0"
+        lower="${radians(-380.0)}"
+        upper="${radians(380.0)}"
+        velocity="${radians(180.0)}" />
+      <dynamics damping="0.01" friction="0.0" />
+    </joint>
+
+    <!-- joint2 (link1 -> link2) -->
+    <joint name="joint2" type="revolute">
+      <parent link="link1" />
+      <child link="link2" />
+      <origin xyz="0.0 0.0 0.5" rpy="0.0 -${pi / 2.0} 0.0" />
+      <axis xyz="0.0 1.0 0.0" />
+      <limit
+        effort="1.0"
+        lower="${radians(-60.0)}"
+        upper="${radians(240.0)}"
+        velocity="${radians(180.0)}" />
+      <dynamics damping="0.01" friction="0.0" />
+    </joint>
+
+    <!-- joint3 (link2 -> tool0) -->
+    <joint name="joint3" type="fixed">
+      <parent link="link2" />
+      <child link="tool0" />
+      <origin xyz="0.0 0.0 0.6" rpy="0.0 ${-pi} ${-pi / 2.0}" />
+    </joint>
+  </xacro:macro>
+</robot>
