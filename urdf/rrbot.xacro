@@ -18,67 +18,85 @@
     <!-- base_link -->
     <link name="base_link">
       <!-- 形状定義 -->
-      <xacro:property name="base_link_shape">
+      <xacro:property name="base_link_origin">
         <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0" />
+      </xacro:property>
+      <xacro:property name="base_link_shape">
         <geometry>
           <box size="0.3 0.3 0.3" />
         </geometry>
       </xacro:property>
 
       <visual>
+        <xacro:insert_block name="base_link_origin" />
         <xacro:insert_block name="base_link_shape" />
         <material name="red" />
       </visual>
 
       <collision>
+        <xacro:insert_block name="base_link_origin" />
         <xacro:insert_block name="base_link_shape" />
       </collision>
 
-      <xacro:default_inertial />
+      <xacro:default_inertial>
+        <xacro:insert_block name="base_link_origin" />
+      </xacro:default_inertial>
     </link>
 
     <!-- link1 -->
     <link name="link1">
       <!-- 形状定義 -->
-      <xacro:property name="link1_shape">
+      <xacro:property name="link1_origin">
         <origin xyz="0.0 0.0 0.25" rpy="0.0 0.0 0.0" />
+      </xacro:property>
+      <xacro:property name="link1_shape">
         <geometry>
           <cylinder length="0.5" radius="${0.2 / 2.0}" />
         </geometry>
       </xacro:property>
 
       <visual>
+        <xacro:insert_block name="link1_origin" />
         <xacro:insert_block name="link1_shape" />
         <material name="green" />
       </visual>
 
       <collision>
+        <xacro:insert_block name="link1_origin" />
         <xacro:insert_block name="link1_shape" />
       </collision>
 
-      <xacro:default_inertial />
+      <xacro:default_inertial>
+        <xacro:insert_block name="link1_origin" />
+      </xacro:default_inertial>
     </link>
 
     <!-- link 2 -->
     <link name="link2">
       <!-- 形状定義 -->
-      <xacro:property name="link2_shape">
+      <xacro:property name="link2_origin">
         <origin xyz="0.0 0.0 0.3" rpy="0.0 0.0 0.0" />
+      </xacro:property>
+      <xacro:property name="link2_shape">
         <geometry>
           <box size="0.1 0.1 0.6" />
         </geometry>
       </xacro:property>
 
       <visual>
+        <xacro:insert_block name="link2_origin" />
         <xacro:insert_block name="link2_shape" />
         <material name="blue" />
       </visual>
 
       <collision>
+        <xacro:insert_block name="link2_origin" />
         <xacro:insert_block name="link2_shape" />
       </collision>
 
-      <xacro:default_inertial />
+      <xacro:default_inertial>
+        <xacro:insert_block name="link2_origin" />
+      </xacro:default_inertial>
     </link>
 
     <!-- tool0 -->

@@ -4,11 +4,9 @@
 <!-- ======================================== -->
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
   <!-- 慣性のデフォルト値 -->
-  <xacro:macro name="default_inertial">
+  <xacro:macro name="default_inertial" params="*origin">
     <inertial>
-      <origin
-        xyz="0.0 0.0 0.0"
-        rpy="0.0 0.0 0.0" />
+      <xacro:insert_block name="origin" />
       <mass
         value="0.01" />
       <inertia
