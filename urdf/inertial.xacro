@@ -8,11 +8,11 @@
     <inertial>
       <xacro:insert_block name="origin" />
       <mass
-        value="0.01" />
+        value="10" />
       <inertia
-        ixx="0.001"
-        iyy="0.001"
-        izz="0.001"
+        ixx="0.05"
+        iyy="0.05"
+        izz="0.05"
         ixy="0.0"
         iyz="0.0"
         ixz="0.0" />
