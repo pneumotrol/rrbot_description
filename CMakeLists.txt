@@ -16,7 +16,6 @@ find_package(ament_cmake REQUIRED)
 # macro expansion with xacro
 add_custom_target(urdf ALL
   COMMAND xacro model.urdf.xacro > model.urdf
-    project_dir:=${CMAKE_CURRENT_SOURCE_DIR}
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/urdf
 )
 

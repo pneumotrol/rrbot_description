@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ======================================== -->
-<!-- URDF本体                                 -->
-<!-- ======================================== -->
 <robot xmlns:xacro="http://wiki.ros.org/xacro" name="rrbot">
-  <!-- ======================================== -->
-  <!-- CMakeによるurdf生成用                     -->
-  <!-- ======================================== -->
-  <xacro:arg name="project_dir" default="$(find rrbot_description)" />
-
   <!-- ======================================== -->
   <!-- ハードウェア利用フラグ                     -->
   <!-- ======================================== -->
@@ -19,23 +11,26 @@
   <!-- ======================================== -->
   <!-- ワールド座標系の定義                       -->
   <!-- ======================================== -->
-
   <link name="world" />
 
   <!-- ======================================== -->
-  <!-- rrbotの定義                             -->
+  <!-- ロボットの形状定義                         -->
   <!-- ======================================== -->
-
-  <!-- ロボットの定義 -->
-  <xacro:include filename="$(arg project_dir)/urdf/rrbot.xacro" />
-  <xacro:include filename="$(arg project_dir)/urdf/inertial.xacro" />
-  <xacro:include filename="$(arg project_dir)/urdf/material.xacro" />
-  <xacro:rrbot parent="world">
+  <!--  parent:         ロボットの親座標系の名前
+        parent_origin:  ロボットの親座標系の原点  -->
+  <xacro:include filename="rrbot.xacro" />
+  <xacro:rrbot
+    parent="world">
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
   </xacro:rrbot>
 
-  <!-- ros2_controlの定義 -->
-  <xacro:include filename="$(arg project_dir)/urdf/rrbot_control.xacro" />
+  <!-- ======================================== -->
+  <!-- ros2_control定義                         -->
+  <!-- ======================================== -->
+  <!--  use_mock:     モックハードウェア利用フラグ
+        use_gazebo:   Gazebo利用フラグ
+        use_unity:    Unity利用フラグ   -->
+  <xacro:include filename="rrbot_control.xacro" />
   <xacro:rrbot_control
     use_mock="$(arg use_mock)"
     use_gazebo="$(arg use_gazebo)"

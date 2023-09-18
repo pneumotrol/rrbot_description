@@ -1,99 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ======================================== -->
-<!-- ロボットの形状定義                         -->
-<!-- ======================================== -->
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
-  <!-- args
-    parent: ロボットの親座標系の名前
-    origin: ロボットの親座標系の原点
-  -->
-  <xacro:macro name="rrbot" params="parent *origin">
+  <xacro:macro name="rrbot" params="parent *parent_origin">
+    <xacro:include filename="inertial.xacro" />
+    <xacro:include filename="material.xacro" />
+
     <!-- ======================================== -->
     <!-- Linkages                                 -->
     <!-- ======================================== -->
-
     <!-- base_link -->
     <link name="base_link">
-      <!-- 形状定義 -->
-      <xacro:property name="base_link_origin">
+      <!-- 原点 -->
+      <xacro:property name="origin">
         <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0" />
       </xacro:property>
-      <xacro:property name="base_link_shape">
+      <!-- 形状 -->
+      <xacro:property name="shape">
         <geometry>
           <box size="0.3 0.3 0.3" />
         </geometry>
       </xacro:property>
+      <!-- 慣性 -->
+      <xacro:property name="inertial">
+        <xacro:default_inertial />
+      </xacro:property>
 
       <visual>
-        <xacro:insert_block name="base_link_origin" />
-        <xacro:insert_block name="base_link_shape" />
+        <xacro:insert_block name="origin" />
+        <xacro:insert_block name="shape" />
         <material name="red" />
       </visual>
 
       <collision>
-        <xacro:insert_block name="base_link_origin" />
-        <xacro:insert_block name="base_link_shape" />
+        <xacro:insert_block name="origin" />
+        <xacro:insert_block name="shape" />
       </collision>
 
-      <xacro:default_inertial>
-        <xacro:insert_block name="base_link_origin" />
-      </xacro:default_inertial>
+      <inertial>
+        <xacro:insert_block name="origin" />
+        <xacro:insert_block name="inertial" />
+      </inertial>
     </link>
 
     <!-- link1 -->
     <link name="link1">
-      <!-- 形状定義 -->
-      <xacro:property name="link1_origin">
+      <!-- 原点 -->
+      <xacro:property name="origin">
         <origin xyz="0.0 0.0 0.25" rpy="0.0 0.0 0.0" />
       </xacro:property>
-      <xacro:property name="link1_shape">
+      <!-- 形状 -->
+      <xacro:property name="shape">
         <geometry>
           <cylinder length="0.5" radius="${0.2 / 2.0}" />
         </geometry>
       </xacro:property>
+      <!-- 慣性 -->
+      <xacro:property name="inertial">
+        <xacro:default_inertial />
+      </xacro:property>
 
       <visual>
-        <xacro:insert_block name="link1_origin" />
-        <xacro:insert_block name="link1_shape" />
+        <xacro:insert_block name="origin" />
+        <xacro:insert_block name="shape" />
         <material name="green" />
       </visual>
 
       <collision>
-        <xacro:insert_block name="link1_origin" />
-        <xacro:insert_block name="link1_shape" />
+        <xacro:insert_block name="origin" />
+        <xacro:insert_block name="shape" />
       </collision>
 
-      <xacro:default_inertial>
-        <xacro:insert_block name="link1_origin" />
-      </xacro:default_inertial>
+      <inertial>
+        <xacro:insert_block name="origin" />
+        <xacro:insert_block name="inertial" />
+      </inertial>
     </link>
 
     <!-- link 2 -->
     <link name="link2">
-      <!-- 形状定義 -->
-      <xacro:property name="link2_origin">
+      <!-- 原点 -->
+      <xacro:property name="origin">
         <origin xyz="0.0 0.0 0.3" rpy="0.0 0.0 0.0" />
       </xacro:property>
-      <xacro:property name="link2_shape">
+      <!-- 形状 -->
+      <xacro:property name="shape">
         <geometry>
           <box size="0.1 0.1 0.6" />
         </geometry>
       </xacro:property>
+      <!-- 慣性 -->
+      <xacro:property name="inertial">
+        <xacro:default_inertial />
+      </xacro:property>
 
       <visual>
-        <xacro:insert_block name="link2_origin" />
-        <xacro:insert_block name="link2_shape" />
+        <xacro:insert_block name="origin" />
+        <xacro:insert_block name="shape" />
         <material name="blue" />
       </visual>
 
       <collision>
-        <xacro:insert_block name="link2_origin" />
-        <xacro:insert_block name="link2_shape" />
+        <xacro:insert_block name="origin" />
+        <xacro:insert_block name="shape" />
       </collision>
 
-      <xacro:default_inertial>
-        <xacro:insert_block name="link2_origin" />
-      </xacro:default_inertial>
+      <inertial>
+        <xacro:insert_block name="origin" />
+        <xacro:insert_block name="inertial" />
+      </inertial>
     </link>
 
     <!-- tool0 -->
@@ -102,12 +115,11 @@
     <!-- ======================================== -->
     <!-- Joints                                   -->
     <!-- ======================================== -->
-
     <!-- base_joint (parent -> base_link) -->
     <joint name="base_joint" type="fixed">
       <parent link="${parent}" />
       <child link="base_link" />
-      <xacro:insert_block name="origin" />
+      <xacro:insert_block name="parent_origin" />
     </joint>
 
     <!-- joint1 (base_link -> link1) -->

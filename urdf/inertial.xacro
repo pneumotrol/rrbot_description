@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ======================================== -->
-<!-- 慣性定義                                   -->
-<!-- ======================================== -->
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
-  <!-- 慣性のデフォルト値 -->
-  <xacro:macro name="default_inertial" params="*origin">
-    <inertial>
-      <xacro:insert_block name="origin" />
-      <mass
-        value="10" />
-      <inertia
-        ixx="0.05"
-        iyy="0.05"
-        izz="0.05"
-        ixy="0.0"
-        iyz="0.0"
-        ixz="0.0" />
-    </inertial>
+  <!-- ======================================== -->
+  <!-- 慣性のデフォルト値                         -->
+  <!-- ======================================== -->
+  <xacro:macro name="default_inertial">
+    <mass
+      value="10" />
+    <inertia
+      ixx="0.05"
+      iyy="0.05"
+      izz="0.05"
+      ixy="0.0"
+      iyz="0.0"
+      ixz="0.0" />
   </xacro:macro>
 </robot>
