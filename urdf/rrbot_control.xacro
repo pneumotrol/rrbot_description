@@ -4,29 +4,30 @@
 <!-- ======================================== -->
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
   <!-- args
-    use_mock_hardware: モックハードウェア利用フラグ
-    mock_sensor_commands: モックハードウェア利用フラグ
-    ^: 上位のスコープで定義された同名のプロパティを使用する
-    |: 上位のスコープで同名のプロパティが定義されていない場合には，続く値を初期値とする
-
-    両方のフラグがtrueの場合のみモックハードウェアが有効になる．
+    use_mock: モックハードウェア利用フラグ
+    use_gazebo: Gazebo利用フラグ
+    use_unity: Unity利用フラグ
   -->
   <xacro:macro name="rrbot_control"
-    params="use_mock_hardware:=^|false mock_sensor_commands:=^|false sim_gazebo_classic:=^|false">
+    params="use_mock:=^|false use_gazebo:=^|false use_unity:=^|false">
     <ros2_control name="rrbot" type="system">
       <!-- ======================================== -->
       <!-- Hardwares                                -->
       <!-- ======================================== -->
       <hardware>
         <!-- モックハードウェアの利用 -->
-        <xacro:if value="${use_mock_hardware}">
+        <xacro:if value="${use_mock}">
           <plugin>mock_components/GenericSystem</plugin>
-          <param name="mock_sensor_commands">${mock_sensor_commands}</param>
         </xacro:if>
 
-        <!-- gazebo classicの利用 -->
-        <xacro:if value="${sim_gazebo_classic}">
+        <!-- Gazeboの利用 -->
+        <xacro:if value="${use_gazebo}">
           <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </xacro:if>
+
+        <!-- Unityの利用 -->
+        <xacro:if value="${use_unity}">
+          <!-- reserved -->
         </xacro:if>
       </hardware>
 
@@ -39,9 +40,7 @@
         <!-- 入力 -->
         <command_interface name="position" />
         <command_interface name="velocity" />
-        <xacro:if value="${use_mock_hardware or sim_gazebo_classic}">
-          <command_interface name="effort" />
-        </xacro:if>
+        <command_interface name="effort" />
 
         <!-- 出力 -->
         <state_interface name="position">
@@ -60,9 +59,7 @@
         <!-- 入力 -->
         <command_interface name="position" />
         <command_interface name="velocity" />
-        <xacro:if value="${use_mock_hardware or sim_gazebo_classic}">
-          <command_interface name="effort" />
-        </xacro:if>
+        <command_interface name="effort" />
 
 
         <!-- 出力 -->
@@ -102,10 +99,8 @@
       <!-- flange_gpios -->
       <gpio name="flange_gpios">
         <!-- 入力 -->
-        <xacro:if value="${use_mock_hardware or sim_gazebo_classic}">
-          <command_interface name="digital_out_0" />
-          <command_interface name="digital_out_1" />
-        </xacro:if>
+        <command_interface name="digital_out_0" />
+        <command_interface name="digital_out_1" />
 
         <!-- 出力 -->
         <state_interface name="digital_in_0" />

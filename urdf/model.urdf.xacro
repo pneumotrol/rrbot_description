@@ -7,11 +7,11 @@
   <!-- launchファイル経由で設定するパラメータ引数   -->
   <!-- ======================================== -->
 
-  <!-- モックハードウェア利用フラグ -->
-  <xacro:arg name="use_mock_hardware" default="false" />
-  <xacro:arg name="mock_sensor_commands" default="false" />
-  <xacro:arg name="sim_gazebo_classic" default="false" />
-  <xacro:arg name="simulation_controllers" default="" />
+  <!-- ハードウェア利用フラグ -->
+  <xacro:arg name="use_mock" default="false" />
+  <xacro:arg name="use_gazebo" default="false" />
+  <xacro:arg name="use_unity" default="false" />
+  <xacro:arg name="controllers_for_gazebo" default="" />
 
   <!-- ======================================== -->
   <!-- ワールド座標系の定義                       -->
@@ -32,18 +32,18 @@
   <!-- ros2_controlの定義 -->
   <xacro:include filename="$(find rrbot_description)/urdf/rrbot_control.xacro" />
   <xacro:rrbot_control
-    use_mock_hardware="$(arg use_mock_hardware)"
-    mock_sensor_commands="$(arg mock_sensor_commands)"
-    sim_gazebo_classic="$(arg sim_gazebo_classic)" />
+    use_mock="$(arg use_mock)"
+    use_gazebo="$(arg use_gazebo)"
+    use_unity="$(arg use_unity)" />
 
   <!-- gazebo classicを使用する場合のみ -->
-  <xacro:if value="$(arg sim_gazebo_classic)">
+  <xacro:if value="$(arg use_gazebo)">
     <gazebo reference="world" />
 
     <!-- gazeboでros2 controlのコントローラマネージャを実行する -->
     <gazebo>
       <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-        <parameters>$(arg simulation_controllers)</parameters>
+        <parameters>$(arg controllers_for_gazebo)</parameters>
       </plugin>
     </gazebo>
   </xacro:if>
