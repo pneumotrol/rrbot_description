@@ -4,10 +4,13 @@
 <!-- ======================================== -->
 <robot xmlns:xacro="http://wiki.ros.org/xacro" name="rrbot">
   <!-- ======================================== -->
-  <!-- launchファイル経由で設定するパラメータ引数   -->
+  <!-- CMakeによるurdf生成用                     -->
   <!-- ======================================== -->
+  <xacro:arg name="project_dir" default="$(find rrbot_description)" />
 
-  <!-- ハードウェア利用フラグ -->
+  <!-- ======================================== -->
+  <!-- ハードウェア利用フラグ                     -->
+  <!-- ======================================== -->
   <xacro:arg name="use_mock" default="false" />
   <xacro:arg name="use_gazebo" default="false" />
   <xacro:arg name="use_unity" default="false" />
@@ -24,13 +27,15 @@
   <!-- ======================================== -->
 
   <!-- ロボットの定義 -->
-  <xacro:include filename="$(find rrbot_description)/urdf/rrbot.xacro" />
+  <xacro:include filename="$(arg project_dir)/urdf/rrbot.xacro" />
+  <xacro:include filename="$(arg project_dir)/urdf/inertial.xacro" />
+  <xacro:include filename="$(arg project_dir)/urdf/material.xacro" />
   <xacro:rrbot parent="world">
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
   </xacro:rrbot>
 
   <!-- ros2_controlの定義 -->
-  <xacro:include filename="$(find rrbot_description)/urdf/rrbot_control.xacro" />
+  <xacro:include filename="$(arg project_dir)/urdf/rrbot_control.xacro" />
   <xacro:rrbot_control
     use_mock="$(arg use_mock)"
     use_gazebo="$(arg use_gazebo)"

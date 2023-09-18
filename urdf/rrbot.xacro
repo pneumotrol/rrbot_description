@@ -3,9 +3,6 @@
 <!-- ロボットの形状定義                         -->
 <!-- ======================================== -->
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
-  <xacro:include filename="$(find rrbot_description)/urdf/inertial.xacro" />
-  <xacro:include filename="$(find rrbot_description)/urdf/material.xacro" />
-
   <!-- args
     parent: ロボットの親座標系の名前
     origin: ロボットの親座標系の原点
