@@ -7,7 +7,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     package = "rrbot_description"
 
-    # xacroからurdfの生成
+    # generate urdf from xacro
     robot_description = Command(
         [
             PathJoinSubstitution(FindExecutable(name="xacro")),
@@ -18,20 +18,15 @@ def generate_launch_description():
         ]
     )
 
-    # urdfを/tfと/robot_desctiptionで配信するノード
+    # node to publish /robot_description and /tf (forward kinematics)
+    # calculated from urdf and /joint_states
     robot_state_publisher = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
         parameters=[{"robot_description": robot_description}],
     )
 
-    # /joint_state操作用GUIノード
-    joint_state_publisher = Node(
-        package="joint_state_publisher_gui",
-        executable="joint_state_publisher_gui",
-    )
-
-    # RViz2ノード
+    # RViz2
     rviz2 = Node(
         package="rviz2",
         executable="rviz2",
@@ -43,4 +38,10 @@ def generate_launch_description():
         ],
     )
 
-    return LaunchDescription([robot_state_publisher, joint_state_publisher, rviz2])
+    # GUI node for /joint_state operation
+    joint_state_publisher = Node(
+        package="joint_state_publisher_gui",
+        executable="joint_state_publisher_gui",
+    )
+
+    return LaunchDescription([robot_state_publisher, rviz2, joint_state_publisher])

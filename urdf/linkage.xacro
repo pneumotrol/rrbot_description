@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <!-- ======================================== -->
+  <!-- Add a linkage                            -->
+  <!-- ======================================== -->
+  <!--
+    origin:         origin of linkage
+    geometry:       shape of linkage
+    mass, inertia:  inertial of linkage
+    material:       material of linkage
+  -->
+  <xacro:macro name="linkage" params="*origin *geometry *mass *inertia *material">
+    <visual>
+      <xacro:insert_block name="origin" />
+      <xacro:insert_block name="geometry" />
+      <xacro:insert_block name="material" />
+    </visual>
+
+    <collision>
+      <xacro:insert_block name="origin" />
+      <xacro:insert_block name="geometry" />
+    </collision>
+
+    <inertial>
+      <xacro:insert_block name="origin" />
+      <xacro:insert_block name="mass" />
+      <xacro:insert_block name="inertia" />
+    </inertial>
+  </xacro:macro>
+</robot>
