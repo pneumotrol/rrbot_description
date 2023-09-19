@@ -4,7 +4,7 @@
   <!-- Definitions of inertial                  -->
   <!-- ======================================== -->
   <!-- Simple inertial value for testing -->
-  <xacro:macro name="default_inertial">
+  <xacro:property name="default_inertial">
     <mass
       value="10" />
     <inertia
@@ -14,5 +14,5 @@
       ixy="0.0"
       iyz="0.0"
       ixz="0.0" />
-  </xacro:macro>
+  </xacro:property>
 </robot>
