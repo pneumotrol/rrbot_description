@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
   <!-- ======================================== -->
-  <!-- 材質定義                                   -->
+  <!-- Definitions of materials                 -->
   <!-- ======================================== -->
   <material name="red">
     <color rgba="1.0 0.0 0.0 1.0" />

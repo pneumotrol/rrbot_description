@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro" name="rrbot">
   <!-- ======================================== -->
-  <!-- ハードウェア利用フラグ                     -->
+  <!-- Hardware selection swtich                -->
   <!-- ======================================== -->
   <xacro:arg name="use_mock" default="false" />
   <xacro:arg name="use_gazebo" default="false" />
   <xacro:arg name="use_unity" default="false" />
-  <xacro:arg name="controllers_for_gazebo" default="" />
+  <xacro:arg name="controller_configs_for_gazebo" default="" />
 
   <!-- ======================================== -->
-  <!-- ワールド座標系の定義                       -->
+  <!-- Reference coordinate system              -->
   <!-- ======================================== -->
   <link name="world" />
 
   <!-- ======================================== -->
-  <!-- ロボットの形状定義                         -->
+  <!-- RRbot                                    -->
   <!-- ======================================== -->
-  <!--  parent:         ロボットの親座標系の名前
-        parent_origin:  ロボットの親座標系の原点  -->
   <xacro:include filename="rrbot.xacro" />
   <xacro:rrbot
     parent="world">
@@ -25,25 +23,22 @@
   </xacro:rrbot>
 
   <!-- ======================================== -->
-  <!-- ros2_control定義                         -->
+  <!-- ros2_control                             -->
   <!-- ======================================== -->
-  <!--  use_mock:     モックハードウェア利用フラグ
-        use_gazebo:   Gazebo利用フラグ
-        use_unity:    Unity利用フラグ   -->
   <xacro:include filename="rrbot_control.xacro" />
   <xacro:rrbot_control
     use_mock="$(arg use_mock)"
     use_gazebo="$(arg use_gazebo)"
     use_unity="$(arg use_unity)" />
 
-  <!-- gazebo classicを使用する場合のみ -->
+  <!-- for Gazebo -->
   <xacro:if value="$(arg use_gazebo)">
     <gazebo reference="world" />
 
-    <!-- gazeboでros2 controlのコントローラマネージャを実行する -->
+    <!-- ros2_control plugin for Gazebo -->
     <gazebo>
       <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-        <parameters>$(arg controllers_for_gazebo)</parameters>
+        <parameters>$(arg controller_configs_for_gazebo)</parameters>
       </plugin>
     </gazebo>
   </xacro:if>

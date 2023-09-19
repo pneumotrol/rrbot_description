@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
   <!-- ======================================== -->
-  <!-- 慣性のデフォルト値                         -->
+  <!-- Definitions of inertial                  -->
   <!-- ======================================== -->
+  <!-- Simple inertial value for testing -->
   <xacro:macro name="default_inertial">
     <mass
       value="10" />

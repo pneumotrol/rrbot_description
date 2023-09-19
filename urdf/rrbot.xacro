@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <!-- ======================================== -->
+  <!-- Definitions of robot                     -->
+  <!-- ======================================== -->
+  <!--
+    parent:         name of parent coodination
+    parent_origin:  origin of parent coordination
+  -->
   <xacro:macro name="rrbot" params="parent *parent_origin">
-    <xacro:include filename="inertial.xacro" />
     <xacro:include filename="material.xacro" />
+    <xacro:include filename="inertial.xacro" />
 
     <!-- ======================================== -->
     <!-- Linkages                                 -->
     <!-- ======================================== -->
     <!-- base_link -->
     <link name="base_link">
-      <!-- 原点 -->
+      <!-- origin -->
       <xacro:property name="origin">
         <origin xyz="0.0 0.0 0.15" rpy="0.0 0.0 0.0" />
       </xacro:property>
-      <!-- 形状 -->
+      <!-- shape -->
       <xacro:property name="shape">
         <geometry>
           <box size="0.3 0.3 0.3" />
         </geometry>
       </xacro:property>
-      <!-- 慣性 -->
+      <!-- inertial -->
       <xacro:property name="inertial">
         <xacro:default_inertial />
       </xacro:property>
@@ -43,17 +50,17 @@
 
     <!-- link1 -->
     <link name="link1">
-      <!-- 原点 -->
+      <!-- origin -->
       <xacro:property name="origin">
         <origin xyz="0.0 0.0 0.25" rpy="0.0 0.0 0.0" />
       </xacro:property>
-      <!-- 形状 -->
+      <!-- shape -->
       <xacro:property name="shape">
         <geometry>
           <cylinder length="0.5" radius="${0.2 / 2.0}" />
         </geometry>
       </xacro:property>
-      <!-- 慣性 -->
+      <!-- inertial -->
       <xacro:property name="inertial">
         <xacro:default_inertial />
       </xacro:property>
@@ -77,17 +84,17 @@
 
     <!-- link 2 -->
     <link name="link2">
-      <!-- 原点 -->
+      <!-- origin -->
       <xacro:property name="origin">
         <origin xyz="0.0 0.0 0.3" rpy="0.0 0.0 0.0" />
       </xacro:property>
-      <!-- 形状 -->
+      <!-- shape -->
       <xacro:property name="shape">
         <geometry>
           <box size="0.1 0.1 0.6" />
         </geometry>
       </xacro:property>
-      <!-- 慣性 -->
+      <!-- inertial -->
       <xacro:property name="inertial">
         <xacro:default_inertial />
       </xacro:property>
